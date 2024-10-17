@@ -37,6 +37,7 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/User'
+
     put:
       summary: Modify user 
       responses:
@@ -81,6 +82,162 @@ paths:
                     items: 
                       $ref: '#/components/schemas/Job'
                     
+  /users/{id}/job-applications:
+    parameters:
+      - schema: 
+          type: integer
+        in: path
+        name: id
+        required: true
+        description: Id of the user
+    get:
+      summary: Get User Applications
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items: 
+                    $ref: '#/components/schemas/JobApplication'
+              examples:
+                two_items:
+                  summary: Two Job Applications
+                  value:
+                    items:
+                    - id: 123
+                      user_id: 123
+                      job_id: 224
+                      status: PENDING
+                    - id: 124
+                      user_id: 123
+                      job_id: 125
+                      status: COMPLETE
+                empty:
+                  summary: No Job Applications
+                  value:
+                    items: []
+                many: 
+                  summary: A lot Of job Applications
+                  value:
+                    - id: 0
+                      user_id: 200
+                      job_id: 500
+                      status: PENDING
+                    - id: 1
+                      user_id: 201
+                      job_id: 501
+                      status: PENDING
+                    - id: 2
+                      user_id: 202
+                      job_id: 502
+                      status: PENDING
+                    - id: 3
+                      user_id: 203
+                      job_id: 503
+                      status: COMPLETE
+                    - id: 4
+                      user_id: 204
+                      job_id: 504
+                      status: COMPLETE
+                    - id: 5
+                      user_id: 205
+                      job_id: 505
+                      status: PENDING
+                    - id: 6
+                      user_id: 206
+                      job_id: 506
+                      status: PENDING
+                    - id: 7
+                      user_id: 207
+                      job_id: 507
+                      status: COMPLETE
+                    - id: 8
+                      user_id: 208
+                      job_id: 508
+                      status: PENDING
+                    - id: 9
+                      user_id: 209
+                      job_id: 509
+                      status: COMPLETE
+                    - id: 10
+                      user_id: 210
+                      job_id: 510
+                      status: COMPLETE
+                    - id: 11
+                      user_id: 211
+                      job_id: 511
+                      status: PENDING
+                    - id: 12
+                      user_id: 212
+                      job_id: 512
+                      status: COMPLETE
+                    - id: 13
+                      user_id: 213
+                      job_id: 513
+                      status: PENDING
+                    - id: 14
+                      user_id: 214
+                      job_id: 514
+                      status: COMPLETE
+                    - id: 15
+                      user_id: 215
+                      job_id: 515
+                      status: COMPLETE
+                    - id: 16
+                      user_id: 216
+                      job_id: 516
+                      status: COMPLETE
+                    - id: 17
+                      user_id: 217
+                      job_id: 517
+                      status: PENDING
+                    - id: 18
+                      user_id: 218
+                      job_id: 518
+                      status: PENDING
+                    - id: 19
+                      user_id: 219
+                      job_id: 519
+                      status: PENDING
+                    - id: 20
+                      user_id: 220
+                      job_id: 520
+                      status: COMPLETE
+                    - id: 21
+                      user_id: 221
+                      job_id: 521
+                      status: PENDING
+                    - id: 22
+                      user_id: 222
+                      job_id: 522
+                      status: COMPLETE
+                    - id: 23
+                      user_id: 223
+                      job_id: 523
+                      status: PENDING
+                    - id: 24
+                      user_id: 224
+                      job_id: 524
+                      status: COMPLETE
+                    - id: 25
+                      user_id: 225
+                      job_id: 525
+                      status: COMPLETE
+                    - id: 26
+                      user_id: 226
+                      job_id: 526
+                      status: PENDING
+                    - id: 27
+                      user_id: 227
+                      job_id: 527
+                      status: PENDING
+                    - id: 28
+                      user_id: 228
+                      job_id: 528
+                      status: COMPLETE
         
   /jobs:
     post: 
@@ -112,6 +269,42 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Job'
+              examples:
+                with-data:
+                  summary: With-Data
+                  value:
+                    items: 
+                    - id: 123
+                      creator_user_id: 345
+                      start_time: 2020-06-01T00:00:00Z
+                      end_time: 2020-06-02T00:00:00Z
+                      dog:
+                        name: Fido
+                        age: 3
+                        breed: Doberman
+                        size: Medium
+                      activity: Walk
+                    - id: 234
+                      creator_user_id: 345
+                      start_time: 2020-06-01T00:00:00Z
+                      end_time: 2020-06-02T00:00:00Z
+                      dog:
+                        name: Rex
+                        age: 2
+                        breed: Rottweiler
+                        size: large
+                      activity: Sit
+                    - id: 234
+                      creator_user_id: 345
+                      start_time: 2020-06-01T00:00:00Z
+                      end_time: 2020-06-02T00:00:00Z
+                      dog:
+                        name: Blossom
+                        age: 2
+                        breed: Rottweiler
+                        size: large
+                      activity: Walk
+                    
   /jobs/{id}:
   
     parameters:
@@ -225,7 +418,7 @@ components:
       properties:
         id:
           type: integer
-        cretor_user_id:
+        creator_user_id:
           type: integer
         start_time: 
           type: string
@@ -251,9 +444,9 @@ components:
       properties:
         id:
           type: integer
-        status:
-          type: string
         user_id:
           type: integer
         job_id:
           type: integer
+        status:
+          type: string
